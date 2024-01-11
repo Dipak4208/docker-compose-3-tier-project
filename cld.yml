@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: My first template
+
+Resources:
+  FirstUser:
+    Type: AWS::IAM::User
+    Properties:
+      Path: /
+      Tags: 
+        - Key: Purpose
+          Value: demo
+      UserName: tanvir_user001

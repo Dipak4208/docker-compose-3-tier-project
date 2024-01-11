@@ -1,0 +1,41 @@
+networks:
+  mongo-network:
+    external: true
+
+services:
+  frontend:
+    image: 11ajinkya/front-end
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - mongo-network
+
+  backend:
+    image: 11ajinkya/back-end
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+    networks:
+      - mongo-network
+
+  db:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - mongo-network
+
+  mongo-express:
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: db
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    ports:
+      - "8081:8081"
+    networks:
+      - mongo-network
